@@ -1,0 +1,31 @@
+package views
+
+import (
+	"myapp/partials"
+	"strconv"
+)
+
+templ Error500(code int, reason string) {
+	<section class="flex flex-col items-center justify-center h-[100vh] gap-4">
+		<div class="items-center justify-center flex flex-col gap-4">
+			<h1 class="text-9xl font-extrabold text-gray-700 tracking-widest">
+				500
+			</h1>
+			<h2 class="bg-rose-700 px-2 text-sm text-white rounded rotate-[20deg] absolute">
+				Internal Server Error
+			</h2>
+		</div>
+		<p class="text-xs text-center md:text-sm text-gray-400">
+			An unexpected error was encountered.
+		</p>
+		<p class="text-xs text-center md:text-sm text-rose-700 mt-2">
+			Code: { strconv.Itoa(code) } - Reason: { reason }
+		</p>
+		@partials.RouterLink(partials.RouterLinkProps{
+			Href:    "/",
+			Classes: "btn btn-primary no-underline",
+		}) {
+			Retour à l'acceuil
+		}
+	</section>
+}

@@ -1,0 +1,301 @@
+package partials
+
+import (
+	"myapp/utils"
+	"myapp/validation"
+)
+
+type Option struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
+type OptionGroup struct {
+	Options []Option `json:"options"`
+	Label   string   `json:"label"`
+}
+
+type InputType string
+
+func GetError(errors *map[string]validation.ValidationError, fieldName string) *validation.ValidationError {
+	if errors == nil {
+		return nil
+	}
+
+	if val, ok := (*errors)[fieldName]; ok {
+		return &val
+	} else {
+		return nil
+	}
+}
+
+const (
+	InputTypeText     InputType = "text"
+	InputTypeSearch   InputType = "search"
+	InputTypePassword InputType = "password"
+	InputTypeSelect   InputType = "select"
+	InputTypeTextArea InputType = "textarea"
+	InputTypeRange    InputType = "range"
+	InputTypeToggle   InputType = "toggle"
+)
+
+type InputProps struct {
+	Type           InputType
+	Name           string
+	Label          string
+	Placeholder    string
+	Value          string
+	Values         []string
+	DisabledValues []string
+	Errors         *map[string]validation.ValidationError
+	ErrorKey       string
+	Options        []Option
+	OptionGroups   []OptionGroup
+	MultiSelect    bool
+	Attributes     templ.Attributes
+	InputClasses   string
+	Icon           templ.Component
+	Button         templ.Component
+	BgTransparent  bool
+	BeforeLabel    templ.Component
+	Disabled       bool
+	ValueOnly      bool
+	Required       bool
+
+	Min  string
+	Max  string
+	Step string
+}
+
+type InputReadOnlyProps struct {
+	Label        string
+	Value        string
+	Icon         templ.Component
+	InputClasses string
+}
+
+templ Input(props InputProps) {
+	<div class="grow">
+		if props.BeforeLabel != nil {
+			<div class="mb-4">
+				@props.BeforeLabel
+			</div>
+		}
+		<label
+			or={ props.Name }
+			class={ templ.Classes(
+					"mb-1 block font-bold",
+					templ.KV("required", props.Label != "" && props.Required && !props.ValueOnly),
+				) }
+		>
+			{ props.Label }
+		</label>
+		if props.Type == InputTypeText || props.Type == InputTypePassword || props.Type == InputTypeSearch {
+			<label
+				class={ templ.Classes(
+					"flex items-center gap-2 w-full",
+					templ.KV("app-border-error", GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) != nil),
+					templ.KV("pr-0", props.Button != nil),
+					templ.KV("input input-bordered", !props.ValueOnly),
+				) }
+			>
+				if props.ValueOnly {
+					<div class="font-bold flex flex-row gap-2">
+						if props.Icon != nil {
+							@props.Icon
+						}
+						{ utils.GetDefaultString(props.Value, "-") }
+					</div>
+				} else {
+					if props.Icon != nil {
+						@props.Icon
+					}
+					<input
+						type={ string(props.Type) }
+						id={ props.Name }
+						name={ props.Name }
+						value={ props.Value }
+						placeholder={ props.Placeholder }
+						disabled?={ props.Disabled }
+						{ props.Attributes... }
+						class={ templ.Classes(
+						props.InputClasses + " grow",
+						templ.KV("join-item", props.Button != nil),
+					) }
+					/>{ children... }
+					if props.Button != nil {
+						@props.Button
+					}
+				}
+			</label>
+		} else if props.Type == InputTypeSelect {
+			if props.ValueOnly {
+				<div class="font-bold flex flex-row gap-2">
+					if props.Icon != nil {
+						@props.Icon
+					}
+					{ utils.GetDefaultString(props.Value, "-") }
+				</div>
+			} else {
+				<div
+					class={ templ.Classes(
+					"flex flex-row items-center pl-4 bg-white rounded-md gap-1",
+					templ.KV("app-border-error", GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) != nil),
+					templ.KV("app-select", GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) == nil),
+					templ.KV("pr-4", props.Button == nil),
+					templ.KV("!bg-transparent !border-none !border-transparent", props.BgTransparent),
+				) }
+				>
+					if props.Icon != nil {
+						@props.Icon
+					}
+					<select
+						id={ props.Name }
+						name={ props.Name }
+						{ props.Attributes... }
+						class={ templ.Classes(
+							"select w-full",
+							templ.KV("!bg-transparent", props.BgTransparent),
+							props.InputClasses,
+						) }
+						disabled?={ props.Disabled }
+						multiple?={ props.MultiSelect }
+					>
+						if len(props.Options) > 0 {
+							@SelectOptions(props.Options, append([]string{props.Value}, props.Values...), props.DisabledValues)
+						} else if len(props.OptionGroups) > 0 {
+							@SelectOptionsGroups(props.OptionGroups, append([]string{props.Value}, props.Values...), props.DisabledValues)
+						}
+						{ children... }
+					</select>
+					if props.Button != nil {
+						@props.Button
+					}
+				</div>
+			}
+		} else if props.Type == InputTypeTextArea {
+			<label
+				class={ templ.Classes(
+					"input input-bordered flex items-center gap-2 w-full",
+					templ.KV("app-border-error", GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) != nil),
+					templ.KV("pr-0", props.Button != nil),
+				) }
+			>
+				if props.Icon != nil {
+					@props.Icon
+				}
+				<textarea
+					id={ props.Name }
+					name={ props.Name }
+					value={ props.Value }
+					placeholder={ props.Placeholder }
+					{ props.Attributes... }
+					class={ templ.Classes(
+						props.InputClasses + " grow",
+						templ.KV("join-item", props.Button != nil),
+					) }
+				></textarea>
+				if props.Button != nil {
+					@props.Button
+				}
+				{ children... }
+			</label>
+		} else if props.Type == InputTypeRange {
+			// <div class="flex flex-row items-center gap-4 border border-black px-4 rounded-lg h-[3.2rem]">
+			<label
+				class={ templ.Classes(
+					"flex items-center gap-2 w-full",
+					templ.KV("app-border-error", GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) != nil),
+					templ.KV("pr-0", props.Button != nil),
+					templ.KV("input input-bordered", !props.ValueOnly),
+				) }
+			>
+				if props.Icon != nil {
+					@props.Icon
+				}
+				<input
+					type="range"
+					id={ props.Name }
+					name={ props.Name }
+					min={ props.Min }
+					max={ props.Max }
+					value={ utils.GetDefaultString(props.Value, "0.0") }
+					class="range range-primary"
+					{ props.Attributes... }
+					oninput="this.nextElementSibling.innerText = window.toFixed(this.value, 2)"
+					step={ props.Step }
+				/>
+				<span class="bg-primary p-1 ont-bold rounded-md">{ props.Value }</span>
+			</label>
+		} else if props.Type == InputTypeToggle {
+			<div
+				class={ templ.Classes(
+					"flex flex-row items-center gap-4 border border-gray-200 bg-white px-4 rounded-lg h-[3.1rem]",
+					templ.KV("app-border-error", GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) != nil),
+				) }
+			>
+				if props.Icon != nil {
+					@props.Icon
+				}
+				<input
+					type="checkbox"
+					id={ props.Name }
+					name={ props.Name }
+					checked?={ props.Value == "on" }
+					class="toggle toggle-primary"
+					onchange="this.nextElementSibling.innerText = this.checked ? 'Oui' : 'Non'"
+				/>
+				if props.Value == "on" {
+					<span>Oui</span>
+				} else {
+					<span>Non</span>
+				}
+			</div>
+		}
+		if GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ) != nil {
+			<p class="mt-2 text-sm text-red-600">{ GetError(props.Errors, utils.GetDefaultString(props.ErrorKey, props.Name) ).ErrorMessage }</p>
+		}
+	</div>
+}
+
+templ InputReadOnly(props InputReadOnlyProps) {
+	<div class="w-full">
+		<label
+			class={ templ.Classes(
+					"mb-1 block font-bold text-nowrap",
+				) }
+		>
+			{ props.Label }
+		</label>
+		<label
+			class={ templ.Classes(
+					"flex items-center gap-2 w-full",
+				) }
+		>
+			<div class="flex flex-row gap-2 items-center justify-center">
+				if props.Icon != nil {
+					@props.Icon
+				}
+				{ utils.GetDefaultString(props.Value, "-") }
+			</div>
+		</label>
+	</div>
+}
+
+templ SelectOptionsGroups(optionGroups []OptionGroup, values []string, disabledValues []string) {
+	for _, group := range optionGroups {
+		<optgroup label={ group.Label }>
+			@SelectOptions(group.Options, values, disabledValues)
+		</optgroup>
+	}
+}
+
+templ SelectOptions(options []Option, values []string, disabledValues []string) {
+	for index, option := range options {
+		if len(values) != 0 {
+			<option value={ option.Value } selected?={ utils.Contains(values, option.Value) } disabled?={ utils.Contains(disabledValues, option.Value) }>{ option.Label }</option>
+		} else {
+			<option value={ option.Value } selected?={ index == 0 } disabled?={ utils.Contains(disabledValues, option.Value) }>{ option.Label } </option>
+		}
+	}
+}

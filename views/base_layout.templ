@@ -1,0 +1,29 @@
+package views
+
+templ Layout(
+	page string,
+) {
+	<!DOCTYPE html>
+	<html lang="en" data-theme="myapp" class="_dark">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+			<meta
+				name="description"
+				content="My Application"
+			/>
+			<meta name="google" content="notranslate"/>
+			<link rel="shortcut icon" href="https://img.icons8.com/color-glass/96/education.png" type="image/svg+xml"/>
+			<link rel="stylesheet" href="/css/output.css"/>
+			<title>App { page }</title>
+			<script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js" crossorigin="anonymous"></script>
+		</head>
+		<body
+			hx-boost="true"
+			tabindex="-1"
+		>
+			<div class="h-screen w-full flex flex-row items-center justify-center font-bold">Hello world!</div>
+		</body>
+	</html>
+}

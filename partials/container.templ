@@ -1,0 +1,11 @@
+package partials
+
+import "strings"
+
+templ Container(classes ...string) {
+	<div class="w-full">
+		<div class={ "mx-auto justify-center items-center sm:max-w-full md:max-w-screen-2xl md:px-4 " + strings.Join(classes, " ") }>
+			{ children... }
+		</div>
+	</div>
+}

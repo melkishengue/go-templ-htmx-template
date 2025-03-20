@@ -1,0 +1,27 @@
+package partials
+
+type RouterLinkProps struct {
+	Href       string
+	ID         string
+	Classes    string
+	Name       string
+	Attributes templ.Attributes
+}
+
+templ RouterLink(props RouterLinkProps) {
+	// attributes overloading does not work with html attributes! once an attribute is set, it will not be overwritten
+	<a
+		{ props.Attributes... }
+		id={ props.ID }
+		href={ templ.SafeURL(props.Href) }
+		class={ templ.Classes(
+					"link ",
+					props.Classes,
+				) }
+		hx-target="#page-content"
+		hx-swap="innerHTML scroll:top transition:true"
+		hx-indicator="#loader"
+	>
+		{ children... }
+	</a>
+}

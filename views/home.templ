@@ -1,0 +1,14 @@
+package views
+
+templ HomeIndex() {
+	<div>Hello, world!</div>
+}
+
+templ Home(
+	page string,
+	cmp templ.Component,
+) {
+	@Layout(page) {
+		@cmp
+	}
+}
