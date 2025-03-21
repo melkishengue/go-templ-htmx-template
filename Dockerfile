@@ -23,9 +23,6 @@ WORKDIR /root/
 
 COPY --from=builder /app/main .
 
-ARG CONFIG_FILE=""
-COPY --from=builder /app/${CONFIG_FILE} ./ 
-
 ARG BUILDTIME=""
 ARG REVISION=""
 
