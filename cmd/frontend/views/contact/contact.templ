@@ -1,0 +1,57 @@
+package contact
+
+import "github.com/melkishengue/gotemplate/pkg/utils"
+
+func getMessagesBackendUrl() string {
+	return utils.GetEnvOrDie("BACKEND_API_URL") + "/v1/internal/messages"
+}
+
+templ Contact() {
+	<div class="w-full max-w-lg mx-auto my-10 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 space-y-6">
+		<form
+			id="form"
+			hx-target="this"
+			hx-post={ getMessagesBackendUrl() }
+			hx-swap="outerHTML"
+		>
+			<div class="text-center mb-8">
+				<h2 class="text-3xl font-bold text-gray-800 mb-2">Get in Touch</h2>
+				<p class="text-gray-600">We'd love to hear from you</p>
+			</div>
+			<div class="space-y-2">
+				<label for="email" class="block text-sm font-semibold text-gray-700">
+					Email Address
+				</label>
+				<input
+					type="email"
+					id="email"
+					name="email"
+					required
+					placeholder="you@example.com"
+					class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all duration-200"
+				/>
+			</div>
+			<div class="space-y-2">
+				<label for="message" class="block text-sm font-semibold text-gray-700">
+					Message
+				</label>
+				<textarea
+					id="message"
+					name="message"
+					required
+					rows="5"
+					placeholder="Tell us what's on your mind..."
+					class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all duration-200 resize-none"
+				></textarea>
+			</div>
+			<button
+				type="submit"
+				class="btn-app"
+				id="submit"
+			>
+				Send Message
+			</button>
+			<div id="response" class="" font-bold></div>
+		</form>
+	</div>
+}

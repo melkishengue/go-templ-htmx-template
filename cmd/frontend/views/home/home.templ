@@ -1,0 +1,62 @@
+package home
+
+templ Home() {
+	<div>
+		<section class="relative py-24 overflow-hidden">
+			<div class="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800"></div>
+			<div class="absolute inset-0 opacity-10">
+				<div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+				<div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full filter blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
+			</div>
+			<div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px); background-size: 50px 50px;"></div>
+			<div class="container mx-auto px-6 text-center relative z-10">
+				<div class="max-w-4xl mx-auto">
+					<div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-5 py-2 mb-8">
+						<span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+						<span class="text-white text-sm font-medium">API Available Now</span>
+					</div>
+					<h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+						Ready to Start
+						<span class="block bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
+							Building Something Amazing?
+						</span>
+					</h2>
+					<p class="text-xl lg:text-2xl mb-10 max-w-3xl mx-auto text-indigo-100 leading-relaxed">
+						Beautifully crafted components built with HTMX, templ, Tailwind & PostgreSQL. The perfect starting point for modern web applications.
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+						<a href="/docs" target="_blank" class="group relative bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-indigo-50 transition-all duration-300 shadow-xl shadow-indigo-900/30 hover:shadow-2xl hover:shadow-indigo-900/40 hover:scale-105">
+							<i class="fas fa-rocket mr-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+							Start Building Now
+						</a>
+						<a href="/docs" target="_blank" class="group bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all duration-300 hover:scale-105">
+							<i class="fas fa-book mr-2"></i>
+							View Documentation
+							<i class="fas fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+						</a>
+					</div>
+					<div class="flex flex-wrap justify-center gap-8 text-white">
+						<div class="flex items-center gap-2">
+							<div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+								<i class="fas fa-check text-green-300"></i>
+							</div>
+							<span class="text-lg">Free Forever Plan</span>
+						</div>
+						<div class="flex items-center gap-2">
+							<div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+								<i class="fas fa-check text-green-300"></i>
+							</div>
+							<span class="text-lg">No Credit Card</span>
+						</div>
+						<div class="flex items-center gap-2">
+							<div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+								<i class="fas fa-check text-green-300"></i>
+							</div>
+							<span class="text-lg">Ready in 5 Minutes</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+}

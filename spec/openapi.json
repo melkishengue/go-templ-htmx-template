@@ -1,0 +1,162 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "contact" : {
+      "email" : "gotemplate-app@my-app.com",
+      "name" : "gotemplate-app Support",
+      "url" : "http://www.swagger.io/support"
+    },
+    "description" : "A well-rounded template with everything you need to get started in golang, htmx and templ",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService" : "http://swagger.io/terms/",
+    "title" : "gotemplate-app",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:3020/api/v1"
+  } ],
+  "paths" : {
+    "/countries/{country_code}/cities" : {
+      "get" : {
+        "description" : "Get a list of cities with optional filtering including radius search",
+        "parameters" : [ {
+          "description" : "Country code - Example: AD, CM, ES, GA, US, CN, RU, FR, DE, etc...",
+          "in" : "path",
+          "name" : "country_code",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "City name (fuzzy search)",
+          "in" : "query",
+          "name" : "name",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Limit",
+          "in" : "query",
+          "name" : "limit",
+          "schema" : {
+            "default" : 10,
+            "type" : "integer"
+          }
+        }, {
+          "description" : "Offset",
+          "in" : "query",
+          "name" : "offset",
+          "schema" : {
+            "default" : 0,
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/city.CitiesResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Get cities"
+      }
+    },
+    "/countries/{country_code}/cities/{id}" : {
+      "get" : {
+        "description" : "Get a city by its ID",
+        "parameters" : [ {
+          "description" : "City ID",
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "Country code - Example: AD, CM, ES, GA, US, CN, RU, FR, DE, etc...",
+          "in" : "path",
+          "name" : "country_code",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/city.City"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Get a city by ID"
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "city.CitiesResponse" : {
+        "properties" : {
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/city.City"
+            },
+            "type" : "array"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/models.PaginationMeta"
+          }
+        },
+        "type" : "object"
+      },
+      "city.City" : {
+        "properties" : {
+          "country_code" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "population" : {
+            "example" : 3000000,
+            "type" : "integer"
+          },
+          "region_code" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "models.PaginationMeta" : {
+        "properties" : {
+          "limit" : {
+            "type" : "integer"
+          },
+          "offset" : {
+            "type" : "integer"
+          },
+          "total" : {
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  },
+  "x-original-swagger-version" : "2.0"
+}

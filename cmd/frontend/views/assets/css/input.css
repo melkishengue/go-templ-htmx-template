@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  pre {
+    overflow-x: auto;
+  }
+
+  ul,
+  ol {
+    margin: revert;
+    padding: revert;
+  }
+  ul {
+    list-style-type: disc;
+  }
+  ol {
+    list-style-type: decimal;
+  }
+}
+
+.btn-app-base {
+  @apply bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg;
+}
+
+.btn-app {
+  @apply btn-app-base bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg;
+}
+
+.btn-app-full {
+  @apply btn-app w-full;
+}

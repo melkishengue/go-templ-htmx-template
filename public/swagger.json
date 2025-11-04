@@ -1,0 +1,158 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A well-rounded template with everything you need to get started in golang, htmx and templ",
+        "title": "gotemplate-app",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "gotemplate-app Support",
+            "url": "http://www.swagger.io/support",
+            "email": "gotemplate-app@my-app.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3020",
+    "basePath": "/api/v1",
+    "paths": {
+        "/countries/{country_code}/cities": {
+            "get": {
+                "description": "Get a list of cities with optional filtering including radius search",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get cities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Country code - Example: AD, CM, ES, GA, US, CN, RU, FR, DE, etc...",
+                        "name": "country_code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "City name (fuzzy search)",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/city.CitiesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/countries/{country_code}/cities/{id}": {
+            "get": {
+                "description": "Get a city by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a city by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Country code - Example: AD, CM, ES, GA, US, CN, RU, FR, DE, etc...",
+                        "name": "country_code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/city.City"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "city.CitiesResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/city.City"
+                    }
+                },
+                "meta": {
+                    "$ref": "#/definitions/models.PaginationMeta"
+                }
+            }
+        },
+        "city.City": {
+            "type": "object",
+            "properties": {
+                "country_code": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "population": {
+                    "type": "integer",
+                    "example": 3000000
+                },
+                "region_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PaginationMeta": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

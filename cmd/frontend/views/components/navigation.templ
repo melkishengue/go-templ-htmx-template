@@ -1,0 +1,27 @@
+package components
+
+templ Navigation() {
+	<nav class="sticky w-full top-0 z-50 bg-white border-b border-gray-200">
+		<div class="container mx-auto px-6 py-4">
+			<div class="flex justify-between items-center">
+				<a href="/" class="flex items-center space-x-3 mb-6 group">
+					<div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/50 group-hover:shadow-indigo-500/80 transition-all duration-300">
+						<img width="32" height="32" src="https://img.icons8.com/fluency/96/windows-defender.png" alt="MyApp API Logo" class="drop-shadow-lg"/>
+					</div>
+					<span class="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">MyApp</span>
+				</a>
+				<div class="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
+					<a href="#features" class="hover:text-blue-700 transition-colors">Features</a>
+					<a href="#docs" class="hover:text-blue-700 transition-colors">Documentation</a>
+					<a href="/contact" class="hover:text-blue-700 transition-colors">Contact</a>
+					<a href="/docs" target="_blank" class="btn-app">
+						Get Started
+					</a>
+				</div>
+				<div class="md:hidden">
+					<i class="fas fa-bars text-2xl text-gray-700"></i>
+				</div>
+			</div>
+		</div>
+	</nav>
+}
