@@ -28,7 +28,7 @@ Same goes for the backend app.
 
 You can also run `make start` to start backend and frontend with live reload.
 
-You can access the [frontend at](http://localhost:3010/) and the [backend at](http://localhost:4010/).
+You can access the frontend at [http://localhost:3010/](http://localhost:3010/) and the backend at [ http://localhost:4010/](http://localhost:4010/).
 
 ### Run Manually
 
