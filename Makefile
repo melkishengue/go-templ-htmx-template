@@ -3,8 +3,8 @@ frontend:
 backend: 
 	air -c cmd/backend/.air.toml
 openapi: 
-	swag init -g cmd/backend/main.go -o public && docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
-    -i /local/public/swagger.json \
+	swag init -g cmd/backend/main.go -o spec && docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
+    -i /local/spec/swagger.json \
     -g openapi \
     -o /local/spec \
     --openapi-normalizer \

@@ -16,12 +16,22 @@ It also uses [swag](https://github.com/swaggo/swag) to generate an openapi speci
 First, create a .env file in the root directory of the project. You can use .env.template as a starting point.
 Fill in the required env vars for connecting to the postgres database.
 
+Next install dependencies:
+
+```bash
+go mod install && npm install
+```
+
 ### Run with Live Reload
 
 Install [Air](https://github.com/air-verse/air) and start the development server:
 
 ```bash
-make frontend or air -c cmd/frontend/.air.toml
+make frontend
+```
+or
+```bash
+air -c cmd/frontend/.air.toml
 ```
 
 Same goes for the backend app.

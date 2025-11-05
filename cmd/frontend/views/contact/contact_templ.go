@@ -11,7 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import "github.com/melkishengue/gotemplate/pkg/utils"
 
 func getMessagesBackendUrl() string {
-	return utils.GetEnvOrDie("BACKEND_API_URL") + "/v1/internal/messages"
+	return utils.GetEnvOrDie("BACKEND_API_URL") + "/api/v1/internal/messages"
 }
 
 func Contact() templ.Component {
