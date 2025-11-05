@@ -4,7 +4,6 @@ import (
 	"time"
 )
 
-// @name City
 type City struct {
 	ID        string    `json:"id" gorm:"type:varchar(255);primaryKey;uniqueIndex:idx_city_unique"`
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"-"`
@@ -18,7 +17,6 @@ type City struct {
 	Population  int     `json:"population" example:"3000000"`
 }
 
-// @name PaginationMeta
 type PaginationMeta struct {
 	Limit  int `json:"limit"`
 	Offset int `json:"offset"`

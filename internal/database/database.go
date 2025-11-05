@@ -24,8 +24,6 @@ func InitDatabase(config *gorm.Config) {
 	}
 
 	err = gormDB.AutoMigrate(
-		&models.Country{},
-		&models.Region{},
 		&models.City{},
 	)
 
